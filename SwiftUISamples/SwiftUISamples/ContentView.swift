@@ -8,13 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
-    var dataSource: [TableSectionItem] = [
-        .init(id: 100, sectionTitle: "基础控件", items: [
-                .init(with: "12", subTitle: "12", controllerName: "12")])]
+
+    private let dataSource: [TableSectionItem]  = [
+        TableSectionItem(sectionTitle: "基础控件",
+                         items: [TableItem(title: "List的基本使用",
+                                           subTitle: "List的基本使用",
+                                           controllerName: "ListController")])
+        ]
+    
+    @State private var singleSelection : UUID?
+
     var body: some View {
         NavigationView {
-            
-            
+            List(selection: $singleSelection){
+                ForEach(dataSource) { tableSectionItem in
+                    Section(header: Text(tableSectionItem.sectionTitle)) {
+                        ForEach(tableSectionItem.items) { item in
+                            NavigationLink(
+                                destination: ListController(item: item),
+                                label: {
+                                    TableSectionRow(item: item)
+                                })
+                        }
+                    }
+                }
+            }
             .navigationBarTitle("SwiftUISamples", displayMode: .large)
         }
     }
