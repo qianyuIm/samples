@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/widgets/index.dart';
 
-import 'routes/index.dart';
-import 'widgets/index.dart';
 void main() {
   runApp(MyApp());
 }
@@ -13,10 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: routers,
     );
   }
 }
@@ -31,49 +30,76 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override 
+  @override
   Widget build(BuildContext context) {
+    var routeLists = routers.keys.toList();
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter Demo'),),
-      body: ListView(children: [
-        ExpansionTile(title: Text("基础组件"),
-        children: _generateItem(context, [
-          PageInfo("context测试", (ctx) => ContextRoute(),withScaffold: false),
-          PageInfo("Widget树中获取State对象", (ctx) => RetrieveStateRoute(), withScaffold: false),
-          PageInfo("文本、字体样式", (ctx) => TextRoute())
-        ]), 
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: new Container(
+        child: new ListView.builder(
+          itemBuilder: (context, index) {
+            return new InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(routeLists[index]);
+              },
+              child: new Card(
+                child: new Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  height: 50,
+                  child: new Text(routers.keys.toList()[index]),
+                ),
+              ),
+            );
+          },
+          itemCount: routers.length,
         ),
-        ExpansionTile(title: Text("布局类组件"),
-        children: _generateItem(context, [
-          PageInfo("Column居中", (ctx) => CenterColumnRoute(),withScaffold: false),
-
-        ]),
-        ),
-      ],),
+      ),
     );
   }
-  
-
-  List<Widget> _generateItem(BuildContext context, List<PageInfo> children) {
-    return children.map<Widget>((page) {
-      return ListTile(
-        title: Text(page.title),
-        trailing: Icon(Icons.keyboard_arrow_right),
-        onTap: () => _openPage(context, page),
-      );
-    }).toList();
-  }
-
-  void _openPage(BuildContext context, PageInfo page) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        if (!page.withScaffold) {
-          return page.builder(context);
-        }
-        return PageScaffold(
-          title: page.title,
-          body: page.builder(context),
-          padding: page.padding,
-        );
-      }));
-  }
 }
+
+// 全局路由
+Map<String, WidgetBuilder> routers = {
+  "状态管理": (context) {
+  return new StateDemoPage();
+  },
+  "父widget管理子widget": (context) {
+  return new StateDemoPage1();
+  },
+  "单选开关和复选框": (context) {
+  return new SwitchAndCheckBoxDempPage();  
+  },
+  "表单登录": (context) {
+    return new FormDemoPage();
+  },
+  "进度条":(context) {
+    return new ProgressDemoPage();
+  }
+  "Row Column": (context) {
+    return new LayoutDemoPage();
+  },
+  "Flex布局类控件": (context) {
+    return new FlexDemoPage();
+  },
+  "Wrap布局类控件": (context) {
+    return new WrapDemoPage();
+  },
+  "Flow布局类控件": (context) {
+    return new FlowDemoPage();
+  },
+  "布局实战": (context) {
+    return new LayoutActualDemoPage();
+  },
+  "文本输入框简单的 Controller": (context) {
+    return new ControllerDemoPage();
+  },
+  "各种按钮": (context) {
+    return new ButtonDemoPage();
+  },
+  "自定义绘制": (context) {
+    return new CustomPainterDemoPage();
+  },
+};
