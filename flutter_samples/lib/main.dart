@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samples/widgets/index.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,43 +62,5 @@ class _MyHomePageState extends State<MyHomePage> {
 
 // 全局路由
 Map<String, WidgetBuilder> routers = {
-  "状态管理": (context) {
-  return new StateDemoPage();
-  },
-  "父widget管理子widget": (context) {
-  return new StateDemoPage1();
-  },
-  "单选开关和复选框": (context) {
-  return new SwitchAndCheckBoxDempPage();  
-  },
-  "表单登录": (context) {
-    return new FormDemoPage();
-  },
-  "进度条":(context) {
-    return new ProgressDemoPage();
-  }
-  "Row Column": (context) {
-    return new LayoutDemoPage();
-  },
-  "Flex布局类控件": (context) {
-    return new FlexDemoPage();
-  },
-  "Wrap布局类控件": (context) {
-    return new WrapDemoPage();
-  },
-  "Flow布局类控件": (context) {
-    return new FlowDemoPage();
-  },
-  "布局实战": (context) {
-    return new LayoutActualDemoPage();
-  },
-  "文本输入框简单的 Controller": (context) {
-    return new ControllerDemoPage();
-  },
-  "各种按钮": (context) {
-    return new ButtonDemoPage();
-  },
-  "自定义绘制": (context) {
-    return new CustomPainterDemoPage();
-  },
+  
 };
